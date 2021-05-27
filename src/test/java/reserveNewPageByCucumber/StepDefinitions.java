@@ -75,7 +75,7 @@ public class StepDefinitions {
   	  connector.setlangJapanese();
     }
 
-    @ならば("画面更新$")
+    @かつ("画面更新$")
     public void refresh() throws InterruptedException {
     	connector.refresh();
     }
@@ -123,6 +123,12 @@ public class StepDefinitions {
 
     	contactType = connector.getReserveUser(selector1);
 
+    }
+
+    @もし("^戻るボタンを押す$")
+    public void clickReturnButton() throws InterruptedException {
+    	String selector = "returnto_index";
+    	connector.btnClickAndWait_ID(selector);
     }
 
     @もし("シナリオを終了してブラウザを閉じる$")
@@ -413,6 +419,23 @@ public class StepDefinitions {
 //    	connector.btnClickAndWait_X(commandLocater2);
     }
 
+    @もし("^宿泊初日条件を\"([^\"]*)\"にして$")
+    public void stayFromday(String stayFrom) throws InterruptedException {
+    	String selector = "datePick";
+
+    	switch(stayFrom) {
+    	case("3ヶ月先"):
+    		connector.fourMonthAgo(selector);
+    		break;
+    	case("当日予約"):
+    		break;
+    	case("翌日以降"):
+    		connector.monday(selector);
+    		break;
+    	default:
+    	}
+    }
+
     @もし("連泊数を\"([^\"]*)\"にして$")
     public void termSetting(String termText) throws InterruptedException {
     	String selector = "reserve_term";
@@ -473,7 +496,9 @@ public class StepDefinitions {
     public void nameSetting(String name) throws InterruptedException {
     	String selector = "guestname";
 
-    	connector.inputAndWait(selector, name);
+    	if(name.length() != 0) {
+    		connector.inputAndWait(selector, name);
+    	}
     }
 
     @かつ("^連絡手段を\"([^\"]*)\"にしたら電話番号を\"([^\"]*)\"にするかメールアドレスを\"([^\"]*)\"にするかして$")
