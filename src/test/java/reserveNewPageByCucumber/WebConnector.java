@@ -1587,6 +1587,32 @@ public class WebConnector {
     		dateTo = reserveToMonthChr + " "  + String.valueOf(reserveToDay) + ", " + String.valueOf(reserveToYear);
     	}
 
+    	public void fourMonthAgo(String commandLocater) throws InterruptedException {
+    		dt = new Date();
+    		Date reserveDate;
+    		String testReserveDate;
+    		Calendar calendar = Calendar.getInstance();
+    		calendar.setTime(dt);
+    		calendar.add(Calendar.MONTH, 4);
+
+    		reserveDate = calendar.getTime();
+    		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    		testReserveDate = sdf.format(reserveDate);
+    		dt = reserveDate;
+
+    		String inputText = testReserveDate.substring(0, 10);
+
+            WebElement inputDate = webDriver.findElement(By.id(commandLocater));
+            wait.until(ExpectedConditions.elementToBeClickable(inputDate));
+            inputDate.sendKeys(Keys.ENTER);
+            inputDate.clear();
+            Thread.sleep(1000);
+//            reserveYear = reserveYear + "\n";
+            inputDate.sendKeys(inputText);
+            Thread.sleep(500);
+
+    	}
+
 /**
  * 検証系
  */
